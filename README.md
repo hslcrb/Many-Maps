@@ -1,36 +1,124 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
-
-## Getting Started
-
-First, run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+```
+ __  __                    __  __                   
+|  \/  | __ _ _ __  _   _  |  \/  | __ _ _ __  ___ 
+| |\/| |/ _` | '_ \| | | | | |\/| |/ _` | '_ \/ __|
+| |  | | (_| | | | | |_| | | |  | | (_| | |_) \__ \
+|_|  |_|\__,_|_| |_|\__, | |_|  |_|\__,_| .__/|___/
+                    |___/               |_|        
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+*다양한 지도를 한 곳에서, 자유롭게 탐험하세요* 🗺️
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+# Many Maps
 
-## Learn More
+> 40개 이상의 지도 스타일을 지원하는 현대적인 웹 지도 뷰어
 
-To learn more about Next.js, take a look at the following resources:
+[![Next.js](https://img.shields.io/badge/Next.js-16-black?logo=next.js)](https://nextjs.org/)
+[![Leaflet](https://img.shields.io/badge/Leaflet-1.9-199900?logo=leaflet)](https://leafletjs.com/)
+[![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## ✨ 주요 기능
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### 🗺️ 40+ 지도 스타일
+- **OpenStreetMap**: 기본, HOT, DE, FR
+- **CARTO**: 다크, 라이트, Voyager, Positron
+- **ESRI**: 위성, 지형도, Street, NatGeo, 해양, Gray
+- **Stadia**: Outdoors, Alidade, Satellite
+- **Stamen**: 수채화, Toner, Terrain
+- **Thunderforest**: 자전거, 교통, Landscape, Atlas
+- **기타**: OpenTopoMap, Wikimedia, MTB, Jawg 등
 
-## Deploy on Vercel
+### 🔄 지도 겹쳐보기 모드
+여러 지도를 동시에 겹쳐서 비교할 수 있습니다.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### 🧭 방위 회전
+- 나침반 드래그로 자유 회전
+- 좌/우 버튼으로 15° 단위 회전
+- 클릭으로 북쪽(0°) 리셋
+- 터치 디바이스에서 두 손가락 회전 지원
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### ℹ️ 지도 정보 툴팁
+각 지도마다 설명과 라이선스 정보를 확인할 수 있습니다.
+
+### 📱 완벽한 반응형
+데스크톱, 태블릿, 모바일, 가로 모드 모두 지원
+
+## 🚀 시작하기
+
+### 필수 조건
+- Node.js 18+
+- npm 또는 yarn
+
+### 설치
+
+```bash
+# 저장소 클론
+git clone https://github.com/your-username/many-maps.git
+cd many-maps
+
+# 의존성 설치
+npm install
+
+# 개발 서버 실행
+npm run dev
+```
+
+브라우저에서 `http://localhost:3000` 접속
+
+### 프로덕션 빌드
+
+```bash
+npm run build
+npm start
+```
+
+## 🛠️ 기술 스택
+
+| 기술 | 용도 |
+|-----|-----|
+| **Next.js 16** | React 프레임워크 |
+| **Leaflet** | 지도 라이브러리 |
+| **leaflet-rotate** | 지도 회전 플러그인 |
+| **CSS** | 글래스모피즘 다크 테마 |
+
+## 📁 프로젝트 구조
+
+```
+src/
+├── app/
+│   ├── globals.css      # 전역 스타일 (다크 테마, 반응형)
+│   ├── layout.js        # 앱 레이아웃
+│   └── page.js          # 메인 페이지
+├── components/
+│   ├── Icons.js         # SVG 아이콘 컴포넌트
+│   └── MapComponent.js  # Leaflet 지도 컴포넌트
+└── data/
+    └── mapLayers.js     # 40+ 지도 레이어 데이터
+```
+
+## 🎨 UI 요소 위치
+
+| 요소 | 위치 |
+|-----|-----|
+| 로고 | 좌측 상단 |
+| 나침반 | 우측 상단 |
+| 줌 컨트롤 | 좌측 하단 |
+| 지도 전환 버튼 | 우측 하단 |
+
+## 🔧 설정 저장
+
+사용자 설정은 `localStorage`에 자동 저장됩니다:
+- `manyMapsCurrentMap` - 현재 선택된 지도
+- `manyMapsBearing` - 현재 방위 각도
+- `manyMapsOverlayMode` - 겹쳐보기 모드 상태
+- `manyMapsOverlays` - 선택된 오버레이 지도들
+
+## 📄 라이선스
+
+MIT License
+
+---
+
+*Made with ❤️ by Rhee Creatives*
