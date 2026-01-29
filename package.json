@@ -1,12 +1,13 @@
 {
-  "name": "doozzoncoo_drawapp",
-  "version": "0.1.0",
+  "name": "many-maps",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "deploy": "npm run build && npx wrangler pages deploy out --project-name=many-maps"
   },
   "dependencies": {
     "leaflet": "^1.9.4",
