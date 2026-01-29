@@ -236,6 +236,23 @@ body {
   display: none;
 }
 
+/* 선택된 항목 표시 - 작은 도트 */
+.map-item.active::after {
+  content: '';
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 6px;
+  height: 6px;
+  background: var(--accent);
+  border-radius: 50%;
+  box-shadow: 0 0 6px var(--accent);
+}
+
+.map-item {
+  position: relative;
+}
+
 .check-icon {
   display: none;
 }
