@@ -10,6 +10,13 @@ const MapComponent = forwardRef(({ currentMap, overlayMaps = [], overlayMode = f
     const tileLayerRef = useRef(null);
     const overlayLayersRef = useRef([]);
 
+    // 타일 렌더링 확장 옵션
+    const tileOptions = {
+        keepBuffer: 8, // 화면 밖 타일 유지 (기본값: 2)
+        updateWhenZooming: false, // 줌 중 업데이트 비활성화 (성능)
+        updateWhenIdle: true, // 이동 멈춘 후 업데이트
+    };
+
     useImperativeHandle(ref, () => ({
         getMap: () => mapInstanceRef.current,
         setBearing: (deg) => {
@@ -32,6 +39,9 @@ const MapComponent = forwardRef(({ currentMap, overlayMaps = [], overlayMode = f
             rotateControl: false,
             bearing: bearing,
             touchRotate: true,
+            // 렌더링 거리 확장
+            worldCopyJump: true, // 세계 복제 점프
+            maxBoundsViscosity: 0, // 경계 제한 없음
         });
 
         // Add zoom control to bottom-left
@@ -39,11 +49,13 @@ const MapComponent = forwardRef(({ currentMap, overlayMaps = [], overlayMode = f
             position: 'bottomleft'
         }).addTo(mapInstanceRef.current);
 
-        // Add initial tile layer
+        // Add initial tile layer with extended buffer
         tileLayerRef.current = L.tileLayer(currentMap.url, {
             attribution: currentMap.attribution,
             maxZoom: currentMap.maxZoom || 19,
+            maxNativeZoom: currentMap.maxZoom || 19,
             subdomains: currentMap.subdomains || "abc",
+            ...tileOptions,
         }).addTo(mapInstanceRef.current);
 
         // Listen for bearing changes from touch/gesture
@@ -89,8 +101,10 @@ const MapComponent = forwardRef(({ currentMap, overlayMaps = [], overlayMode = f
                 const layer = L.tileLayer(map.url, {
                     attribution: map.attribution,
                     maxZoom: map.maxZoom || 19,
+                    maxNativeZoom: map.maxZoom || 19,
                     subdomains: map.subdomains || "abc",
                     opacity: 0.3 + (index * opacityStep * 0.5),
+                    ...tileOptions,
                 }).addTo(mapInstanceRef.current);
                 overlayLayersRef.current.push(layer);
             });
@@ -100,7 +114,9 @@ const MapComponent = forwardRef(({ currentMap, overlayMaps = [], overlayMode = f
             tileLayerRef.current = L.tileLayer(currentMap.url, {
                 attribution: currentMap.attribution,
                 maxZoom: currentMap.maxZoom || 19,
+                maxNativeZoom: currentMap.maxZoom || 19,
                 subdomains: currentMap.subdomains || "abc",
+                ...tileOptions,
             }).addTo(mapInstanceRef.current);
         }
     }, [currentMap, overlayMode, overlayMaps]);
