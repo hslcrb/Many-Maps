@@ -2,8 +2,9 @@
 
 import { useEffect, useRef, useImperativeHandle, forwardRef } from "react";
 import L from "leaflet";
+import "leaflet-rotate";
 
-const MapComponent = forwardRef(({ currentMap, overlayMaps = [], overlayMode = false, bearing = 0 }, ref) => {
+const MapComponent = forwardRef(({ currentMap, overlayMaps = [], overlayMode = false, bearing = 0, onBearingChange }, ref) => {
     const mapRef = useRef(null);
     const mapInstanceRef = useRef(null);
     const tileLayerRef = useRef(null);
@@ -11,17 +12,26 @@ const MapComponent = forwardRef(({ currentMap, overlayMaps = [], overlayMode = f
 
     useImperativeHandle(ref, () => ({
         getMap: () => mapInstanceRef.current,
+        setBearing: (deg) => {
+            if (mapInstanceRef.current && mapInstanceRef.current.setBearing) {
+                mapInstanceRef.current.setBearing(deg);
+            }
+        }
     }));
 
     useEffect(() => {
         if (!mapRef.current || mapInstanceRef.current) return;
 
-        // Initialize map
+        // Initialize map with rotation support
         mapInstanceRef.current = L.map(mapRef.current, {
             center: [37.5665, 126.9780], // Seoul
             zoom: 13,
             zoomControl: false,
             preferCanvas: true,
+            rotate: true,
+            rotateControl: false,
+            bearing: bearing,
+            touchRotate: true,
         });
 
         // Add zoom control to bottom-left
@@ -36,6 +46,15 @@ const MapComponent = forwardRef(({ currentMap, overlayMaps = [], overlayMode = f
             subdomains: currentMap.subdomains || "abc",
         }).addTo(mapInstanceRef.current);
 
+        // Listen for bearing changes from touch/gesture
+        if (mapInstanceRef.current.on) {
+            mapInstanceRef.current.on('rotate', (e) => {
+                if (onBearingChange && e.bearing !== undefined) {
+                    onBearingChange(e.bearing);
+                }
+            });
+        }
+
         return () => {
             if (mapInstanceRef.current) {
                 mapInstanceRef.current.remove();
@@ -43,6 +62,13 @@ const MapComponent = forwardRef(({ currentMap, overlayMaps = [], overlayMode = f
             }
         };
     }, []);
+
+    // Update bearing when prop changes
+    useEffect(() => {
+        if (mapInstanceRef.current && mapInstanceRef.current.setBearing) {
+            mapInstanceRef.current.setBearing(bearing);
+        }
+    }, [bearing]);
 
     useEffect(() => {
         if (!mapInstanceRef.current) return;
@@ -79,20 +105,11 @@ const MapComponent = forwardRef(({ currentMap, overlayMaps = [], overlayMode = f
         }
     }, [currentMap, overlayMode, overlayMaps]);
 
-    // 회전할 때 대각선 길이만큼 확대해야 모서리가 안 잘림
-    // 대각선 = sqrt(2) ≈ 1.42, 여유를 두어 1.5배
-    const scale = bearing !== 0 ? 1.42 : 1;
-
     return (
-        <div className="map-wrapper">
-            <div
-                ref={mapRef}
-                className="map-inner"
-                style={{
-                    transform: `rotate(${bearing}deg) scale(${scale})`,
-                }}
-            />
-        </div>
+        <div
+            ref={mapRef}
+            className="map-container"
+        />
     );
 });
 
