@@ -1,66 +1,131 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+"use client";
+
+import { useState, useEffect } from "react";
+import dynamic from "next/dynamic";
+import { mapLayers, getMapById } from "@/data/mapLayers";
+import {
+  MapLayerIcon,
+  CloseIcon,
+  CheckIcon,
+  GlobeIcon,
+  SatelliteIcon,
+  StreetIcon,
+  TerrainIcon,
+  DarkIcon,
+  TransportIcon,
+  TopoIcon,
+  WatercolorIcon,
+  HotIcon,
+  LogoIcon,
+} from "@/components/Icons";
+
+// Dynamic import for Leaflet (client-side only)
+const MapComponent = dynamic(() => import("@/components/MapComponent"), {
+  ssr: false,
+  loading: () => <div className="map-container" style={{ background: "#1a1a2e" }} />,
+});
+
+const iconMap = {
+  globe: GlobeIcon,
+  satellite: SatelliteIcon,
+  street: StreetIcon,
+  terrain: TerrainIcon,
+  dark: DarkIcon,
+  transport: TransportIcon,
+  topo: TopoIcon,
+  watercolor: WatercolorIcon,
+  hot: HotIcon,
+};
 
 export default function Home() {
+  const [isPanelOpen, setIsPanelOpen] = useState(false);
+  const [currentMapId, setCurrentMapId] = useState("osm");
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+    // Load saved map preference
+    const saved = localStorage.getItem("manyMapsCurrentMap");
+    if (saved) {
+      setCurrentMapId(saved);
+    }
+  }, []);
+
+  const handleMapChange = (mapId) => {
+    setCurrentMapId(mapId);
+    localStorage.setItem("manyMapsCurrentMap", mapId);
+    // Panel stays open until user closes it
+  };
+
+  const currentMap = getMapById(currentMapId);
+
+  if (!mounted) {
+    return <div className="map-container" style={{ background: "#1a1a2e" }} />;
+  }
+
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className={styles.intro}>
-          <h1>To get started, edit the page.js file.</h1>
-          <p>
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <>
+      {/* Logo */}
+      <div className="logo">
+        <LogoIcon />
+        <span>Many Maps</span>
+      </div>
+
+      {/* Map */}
+      <MapComponent currentMap={currentMap} />
+
+      {/* Map Toggle Button */}
+      <button
+        className="map-toggle-btn"
+        onClick={() => setIsPanelOpen(!isPanelOpen)}
+        title="지도 스타일 변경"
+      >
+        <MapLayerIcon />
+      </button>
+
+      {/* Map Selection Panel */}
+      {isPanelOpen && (
+        <div className="map-panel">
+          <div className="panel-header">
+            <h2>
+              <MapLayerIcon />
+              지도 스타일
+            </h2>
+            <button className="close-btn" onClick={() => setIsPanelOpen(false)}>
+              <CloseIcon />
+            </button>
+          </div>
+          <div className="map-list">
+            {mapLayers.map((map) => {
+              const IconComponent = iconMap[map.icon] || GlobeIcon;
+              const isActive = currentMapId === map.id;
+
+              return (
+                <button
+                  key={map.id}
+                  className={`map-item ${isActive ? "active" : ""}`}
+                  onClick={() => handleMapChange(map.id)}
+                >
+                  <div
+                    className="map-icon"
+                    style={{
+                      background: `linear-gradient(135deg, ${map.color}22, ${map.color}44)`,
+                      color: map.color,
+                    }}
+                  >
+                    <IconComponent />
+                  </div>
+                  <div className="map-info">
+                    <h3>{map.name}</h3>
+                    <p>{map.description}</p>
+                  </div>
+                  <CheckIcon className="check-icon" />
+                </button>
+              );
+            })}
+          </div>
         </div>
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className={styles.secondary}
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+      )}
+    </>
   );
 }
