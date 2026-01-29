@@ -79,15 +79,20 @@ const MapComponent = forwardRef(({ currentMap, overlayMaps = [], overlayMode = f
         }
     }, [currentMap, overlayMode, overlayMaps]);
 
+    // 회전할 때 대각선 길이만큼 확대해야 모서리가 안 잘림
+    // 대각선 = sqrt(2) ≈ 1.42, 여유를 두어 1.5배
+    const scale = bearing !== 0 ? 1.42 : 1;
+
     return (
-        <div
-            ref={mapRef}
-            className="map-container"
-            style={{
-                transform: `rotate(${bearing}deg)`,
-                transformOrigin: 'center center',
-            }}
-        />
+        <div className="map-wrapper">
+            <div
+                ref={mapRef}
+                className="map-inner"
+                style={{
+                    transform: `rotate(${bearing}deg) scale(${scale})`,
+                }}
+            />
+        </div>
     );
 });
 

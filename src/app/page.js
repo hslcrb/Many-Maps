@@ -26,7 +26,7 @@ import {
 // Dynamic import for Leaflet (client-side only)
 const MapComponent = dynamic(() => import("@/components/MapComponent"), {
   ssr: false,
-  loading: () => <div className="map-container" style={{ background: "#1a1a2e" }} />,
+  loading: () => <div className="map-wrapper" style={{ background: "#1a1a2e" }} />,
 });
 
 const iconMap = {
@@ -150,7 +150,7 @@ export default function Home() {
   const overlayMapsData = selectedOverlays.map(id => getMapById(id)).filter(Boolean);
 
   if (!mounted) {
-    return <div className="map-container" style={{ background: "#1a1a2e" }} />;
+    return <div className="map-wrapper" style={{ background: "#1a1a2e" }} />;
   }
 
   return (
