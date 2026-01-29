@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import dynamic from "next/dynamic";
 import { mapLayers, getMapById } from "@/data/mapLayers";
 import {
@@ -18,6 +18,9 @@ import {
   LogoIcon,
   OverlayIcon,
   InfoIcon,
+  CompassIcon,
+  RotateLeftIcon,
+  RotateRightIcon,
 } from "@/components/Icons";
 
 // Dynamic import for Leaflet (client-side only)
@@ -43,7 +46,10 @@ export default function Home() {
   const [currentMapId, setCurrentMapId] = useState("osm");
   const [overlayMode, setOverlayMode] = useState(false);
   const [selectedOverlays, setSelectedOverlays] = useState([]);
+  const [bearing, setBearing] = useState(0);
   const [mounted, setMounted] = useState(false);
+  const [isDragging, setIsDragging] = useState(false);
+  const dragStartRef = useRef({ x: 0, y: 0, bearing: 0 });
 
   useEffect(() => {
     setMounted(true);
@@ -58,6 +64,10 @@ export default function Home() {
       if (savedOverlays) {
         setSelectedOverlays(JSON.parse(savedOverlays));
       }
+    }
+    const savedBearing = localStorage.getItem("manyMapsBearing");
+    if (savedBearing) {
+      setBearing(parseFloat(savedBearing));
     }
   }, []);
 
@@ -86,6 +96,56 @@ export default function Home() {
     }
   };
 
+  const resetBearing = () => {
+    setBearing(0);
+    localStorage.setItem("manyMapsBearing", "0");
+  };
+
+  const rotateBearing = (delta) => {
+    setBearing(prev => {
+      const newBearing = (prev + delta + 360) % 360;
+      localStorage.setItem("manyMapsBearing", newBearing.toString());
+      return newBearing;
+    });
+  };
+
+  // Compass drag rotation
+  const handleCompassMouseDown = useCallback((e) => {
+    e.preventDefault();
+    setIsDragging(true);
+    dragStartRef.current = {
+      x: e.clientX,
+      y: e.clientY,
+      bearing: bearing,
+    };
+  }, [bearing]);
+
+  const handleMouseMove = useCallback((e) => {
+    if (!isDragging) return;
+
+    const deltaX = e.clientX - dragStartRef.current.x;
+    const newBearing = (dragStartRef.current.bearing + deltaX * 0.5 + 360) % 360;
+    setBearing(newBearing);
+  }, [isDragging]);
+
+  const handleMouseUp = useCallback(() => {
+    if (isDragging) {
+      setIsDragging(false);
+      localStorage.setItem("manyMapsBearing", bearing.toString());
+    }
+  }, [isDragging, bearing]);
+
+  useEffect(() => {
+    if (isDragging) {
+      window.addEventListener('mousemove', handleMouseMove);
+      window.addEventListener('mouseup', handleMouseUp);
+      return () => {
+        window.removeEventListener('mousemove', handleMouseMove);
+        window.removeEventListener('mouseup', handleMouseUp);
+      };
+    }
+  }, [isDragging, handleMouseMove, handleMouseUp]);
+
   const currentMap = getMapById(currentMapId);
   const overlayMapsData = selectedOverlays.map(id => getMapById(id)).filter(Boolean);
 
@@ -101,11 +161,41 @@ export default function Home() {
         <span>Many Maps</span>
       </div>
 
+      {/* Compass - 우측 상단 */}
+      <div className="compass-container">
+        <button
+          className="rotate-btn rotate-left"
+          onClick={() => rotateBearing(-15)}
+          title="15° 왼쪽 회전"
+        >
+          <RotateLeftIcon />
+        </button>
+        <button
+          className={`compass-btn ${bearing !== 0 ? 'rotated' : ''}`}
+          onClick={resetBearing}
+          onMouseDown={handleCompassMouseDown}
+          title={bearing !== 0 ? `${bearing.toFixed(1)}° - 클릭하여 북쪽으로 리셋` : "드래그하여 회전"}
+        >
+          <CompassIcon rotation={bearing} />
+          {bearing !== 0 && (
+            <span className="bearing-indicator">{Math.round(bearing)}°</span>
+          )}
+        </button>
+        <button
+          className="rotate-btn rotate-right"
+          onClick={() => rotateBearing(15)}
+          title="15° 오른쪽 회전"
+        >
+          <RotateRightIcon />
+        </button>
+      </div>
+
       {/* Map */}
       <MapComponent
         currentMap={currentMap}
         overlayMode={overlayMode}
         overlayMaps={overlayMapsData}
+        bearing={bearing}
       />
 
       {/* Control Buttons - 우측 하단 */}

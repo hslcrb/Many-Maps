@@ -1,13 +1,17 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useImperativeHandle, forwardRef } from "react";
 import L from "leaflet";
 
-const MapComponent = ({ currentMap, overlayMaps = [], overlayMode = false }) => {
+const MapComponent = forwardRef(({ currentMap, overlayMaps = [], overlayMode = false, bearing = 0 }, ref) => {
     const mapRef = useRef(null);
     const mapInstanceRef = useRef(null);
     const tileLayerRef = useRef(null);
     const overlayLayersRef = useRef([]);
+
+    useImperativeHandle(ref, () => ({
+        getMap: () => mapInstanceRef.current,
+    }));
 
     useEffect(() => {
         if (!mapRef.current || mapInstanceRef.current) return;
@@ -16,7 +20,7 @@ const MapComponent = ({ currentMap, overlayMaps = [], overlayMode = false }) => 
         mapInstanceRef.current = L.map(mapRef.current, {
             center: [37.5665, 126.9780], // Seoul
             zoom: 13,
-            zoomControl: false, // 커스텀 위치를 위해 비활성화
+            zoomControl: false,
             preferCanvas: true,
         });
 
@@ -53,7 +57,6 @@ const MapComponent = ({ currentMap, overlayMaps = [], overlayMode = false }) => 
         overlayLayersRef.current = [];
 
         if (overlayMode && overlayMaps.length > 0) {
-            // Overlay mode: stack multiple maps with opacity
             const opacityStep = 1 / overlayMaps.length;
 
             overlayMaps.forEach((map, index) => {
@@ -68,7 +71,6 @@ const MapComponent = ({ currentMap, overlayMaps = [], overlayMode = false }) => 
 
             tileLayerRef.current = null;
         } else {
-            // Normal mode: single map
             tileLayerRef.current = L.tileLayer(currentMap.url, {
                 attribution: currentMap.attribution,
                 maxZoom: currentMap.maxZoom || 19,
@@ -77,7 +79,18 @@ const MapComponent = ({ currentMap, overlayMaps = [], overlayMode = false }) => 
         }
     }, [currentMap, overlayMode, overlayMaps]);
 
-    return <div ref={mapRef} className="map-container" />;
-};
+    return (
+        <div
+            ref={mapRef}
+            className="map-container"
+            style={{
+                transform: `rotate(${bearing}deg)`,
+                transformOrigin: 'center center',
+            }}
+        />
+    );
+});
+
+MapComponent.displayName = 'MapComponent';
 
 export default MapComponent;

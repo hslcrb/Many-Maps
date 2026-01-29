@@ -127,11 +127,45 @@ export const OverlayIcon = () => (
     </svg>
 );
 
-// Info Icon (새로 추가)
+// Info Icon
 export const InfoIcon = () => (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
         <circle cx="12" cy="12" r="10" />
         <line x1="12" y1="16" x2="12" y2="12" />
         <line x1="12" y1="8" x2="12.01" y2="8" />
+    </svg>
+);
+
+// Compass Icon (나침반)
+export const CompassIcon = ({ rotation = 0 }) => (
+    <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        style={{ transform: `rotate(${-rotation}deg)`, transition: 'transform 0.3s ease' }}
+    >
+        <circle cx="12" cy="12" r="10" strokeWidth="1.5" />
+        <polygon points="12 2 14.5 9 12 7 9.5 9 12 2" fill="#ef4444" stroke="#ef4444" />
+        <polygon points="12 22 9.5 15 12 17 14.5 15 12 22" fill="currentColor" stroke="currentColor" />
+        <line x1="12" y1="7" x2="12" y2="17" strokeWidth="1" opacity="0.3" />
+    </svg>
+);
+
+// Rotate Left Icon
+export const RotateLeftIcon = () => (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M2.5 2v6h6" />
+        <path d="M2.5 8C4.5 4.5 8 2 12 2c5.5 0 10 4.5 10 10s-4.5 10-10 10c-4 0-7.5-2.5-9-6" />
+    </svg>
+);
+
+// Rotate Right Icon
+export const RotateRightIcon = () => (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M21.5 2v6h-6" />
+        <path d="M21.5 8C19.5 4.5 16 2 12 2 6.5 2 2 6.5 2 12s4.5 10 10 10c4 0 7.5-2.5 9-6" />
     </svg>
 );
