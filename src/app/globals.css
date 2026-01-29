@@ -41,52 +41,108 @@ body {
   z-index: 1;
 }
 
-/* Map Toggle Button - 더 작게 */
-.map-toggle-btn {
+/* Logo - 좌측 상단 */
+.logo {
   position: fixed;
-  bottom: 20px;
-  right: 20px;
+  top: 20px;
+  left: 20px;
   z-index: 1000;
-  width: 44px;
-  height: 44px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 20px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+}
+
+.logo svg {
+  width: 24px;
+  height: 24px;
+  color: var(--accent);
+}
+
+.logo span {
+  font-size: 16px;
+  font-weight: 700;
+  background: linear-gradient(135deg, #fff, #a5b4fc);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Control Buttons - 우측 하단 */
+.control-buttons {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.control-btn {
+  width: 52px;
+  height: 52px;
   border: none;
-  border-radius: 12px;
-  background: linear-gradient(135deg, var(--accent), #8b5cf6);
+  border-radius: 14px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
   color: white;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: var(--shadow), 0 0 20px rgba(99, 102, 241, 0.3);
+  box-shadow: var(--shadow);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid var(--glass-border);
 }
 
-.map-toggle-btn:hover {
+.control-btn:hover {
   transform: translateY(-2px) scale(1.05);
-  box-shadow: var(--shadow), 0 0 30px rgba(99, 102, 241, 0.5);
+  background: rgba(99, 102, 241, 0.3);
 }
 
-.map-toggle-btn:active {
+.control-btn:active {
   transform: translateY(0) scale(0.98);
 }
 
-.map-toggle-btn svg {
-  width: 20px;
-  height: 20px;
+.control-btn svg {
+  width: 24px;
+  height: 24px;
 }
 
-/* Map Panel - 그리드 형태로 한눈에 보이게 */
+.map-toggle-btn {
+  background: linear-gradient(135deg, var(--accent), #8b5cf6);
+  box-shadow: var(--shadow), 0 0 20px rgba(99, 102, 241, 0.3);
+}
+
+.map-toggle-btn:hover {
+  box-shadow: var(--shadow), 0 0 30px rgba(99, 102, 241, 0.5);
+}
+
+.overlay-btn.active {
+  background: linear-gradient(135deg, #f59e0b, #ef4444);
+  box-shadow: var(--shadow), 0 0 20px rgba(245, 158, 11, 0.4);
+}
+
+/* Map Panel - 우측에 표시 */
 .map-panel {
   position: fixed;
-  bottom: 20px;
-  right: 76px;
+  bottom: 24px;
+  right: 88px;
   z-index: 1000;
-  width: 420px;
+  width: 500px;
+  max-width: calc(100vw - 112px);
   background: var(--panel-bg);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid var(--panel-border);
-  border-radius: 16px;
+  border-radius: 20px;
   box-shadow: var(--shadow);
   overflow: hidden;
   animation: slideIn 0.25s cubic-bezier(0.4, 0, 0.2, 1);
@@ -108,30 +164,47 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 12px 16px;
+  padding: 16px 20px;
   border-bottom: 1px solid var(--glass-border);
 }
 
 .panel-header h2 {
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 600;
   color: var(--foreground);
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
 }
 
 .panel-header h2 svg {
-  width: 16px;
-  height: 16px;
+  width: 18px;
+  height: 18px;
   color: var(--accent);
 }
 
+.overlay-badge {
+  font-size: 11px;
+  font-weight: 500;
+  padding: 4px 10px;
+  background: linear-gradient(135deg, #f59e0b, #ef4444);
+  border-radius: 20px;
+  margin-left: 8px;
+}
+
+.overlay-info {
+  padding: 12px 20px;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.6);
+  background: rgba(245, 158, 11, 0.1);
+  border-bottom: 1px solid var(--glass-border);
+}
+
 .close-btn {
-  width: 28px;
-  height: 28px;
+  width: 36px;
+  height: 36px;
   border: none;
-  border-radius: 6px;
+  border-radius: 10px;
   background: rgba(255, 255, 255, 0.05);
   color: var(--foreground);
   cursor: pointer;
@@ -147,22 +220,22 @@ body {
 }
 
 .close-btn svg {
-  width: 14px;
-  height: 14px;
+  width: 16px;
+  height: 16px;
 }
 
-/* Map Grid - 그리드 레이아웃 */
+/* Map Grid */
 .map-list {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 8px;
-  padding: 12px;
-  max-height: 320px;
+  gap: 10px;
+  padding: 16px;
+  max-height: 400px;
   overflow-y: auto;
 }
 
 .map-list::-webkit-scrollbar {
-  width: 4px;
+  width: 6px;
 }
 
 .map-list::-webkit-scrollbar-track {
@@ -171,22 +244,29 @@ body {
 
 .map-list::-webkit-scrollbar-thumb {
   background: rgba(255, 255, 255, 0.1);
-  border-radius: 2px;
+  border-radius: 3px;
 }
 
 .map-list::-webkit-scrollbar-thumb:hover {
   background: rgba(255, 255, 255, 0.2);
 }
 
-/* Map Item - 컴팩트한 카드 */
+/* Map Item Wrapper */
+.map-item-wrapper {
+  position: relative;
+}
+
+/* Map Item */
 .map-item {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 6px;
-  padding: 10px 6px;
+  gap: 8px;
+  padding: 14px 8px;
+  width: 100%;
   border: 1px solid transparent;
-  border-radius: 10px;
+  border-radius: 12px;
   background: rgba(255, 255, 255, 0.03);
   color: var(--foreground);
   cursor: pointer;
@@ -197,6 +277,7 @@ body {
 .map-item:hover {
   background: rgba(255, 255, 255, 0.08);
   border-color: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
 }
 
 .map-item.active {
@@ -204,10 +285,22 @@ body {
   border-color: rgba(99, 102, 241, 0.4);
 }
 
+.map-item.active::after {
+  content: '';
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 8px;
+  height: 8px;
+  background: var(--accent);
+  border-radius: 50%;
+  box-shadow: 0 0 8px var(--accent);
+}
+
 .map-icon {
-  width: 32px;
-  height: 32px;
-  border-radius: 8px;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -215,8 +308,8 @@ body {
 }
 
 .map-icon svg {
-  width: 16px;
-  height: 16px;
+  width: 20px;
+  height: 20px;
 }
 
 .map-info {
@@ -225,69 +318,72 @@ body {
 }
 
 .map-info h3 {
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 500;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-.map-info p {
-  display: none;
-}
-
-/* 선택된 항목 표시 - 작은 도트 */
-.map-item.active::after {
-  content: '';
+/* Info Button & Tooltip */
+.info-btn {
   position: absolute;
-  top: 6px;
-  right: 6px;
-  width: 6px;
-  height: 6px;
-  background: var(--accent);
-  border-radius: 50%;
-  box-shadow: 0 0 6px var(--accent);
-}
-
-.map-item {
-  position: relative;
-}
-
-.check-icon {
-  display: none;
-}
-
-/* Logo - 더 작게 */
-.logo {
-  position: fixed;
-  top: 16px;
-  left: 16px;
-  z-index: 1000;
+  top: 4px;
+  left: 4px;
+  width: 16px;
+  height: 16px;
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 10px 14px;
-  background: var(--glass-bg);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid var(--glass-border);
-  border-radius: 12px;
-  box-shadow: var(--shadow);
+  justify-content: center;
+  color: rgba(255, 255, 255, 0.3);
+  cursor: help;
+  z-index: 10;
 }
 
-.logo svg {
-  width: 20px;
-  height: 20px;
+.info-btn svg {
+  width: 12px;
+  height: 12px;
+}
+
+.info-btn:hover {
   color: var(--accent);
 }
 
-.logo span {
-  font-size: 14px;
-  font-weight: 700;
-  background: linear-gradient(135deg, #fff, #a5b4fc);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+.info-btn:hover .tooltip {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.tooltip {
+  position: absolute;
+  top: 20px;
+  left: 0;
+  min-width: 160px;
+  padding: 10px 12px;
+  background: rgba(0, 0, 0, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-5px);
+  transition: all 0.2s ease;
+  z-index: 100;
+  pointer-events: none;
+}
+
+.tooltip-desc {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 6px;
+  line-height: 1.4;
+}
+
+.tooltip-license {
+  font-size: 10px;
+  color: var(--accent);
+  font-weight: 500;
 }
 
 /* Leaflet overrides */
@@ -297,20 +393,20 @@ body {
   background: #1a1a2e;
 }
 
-/* Zoom Controls - 세련된 스타일 */
+/* Zoom Controls - 좌측 하단 */
 .leaflet-control-zoom {
   border: none !important;
   box-shadow: var(--shadow) !important;
-  border-radius: 10px !important;
+  border-radius: 12px !important;
   overflow: hidden;
-  margin: 16px !important;
+  margin: 20px !important;
 }
 
 .leaflet-control-zoom a {
-  width: 36px !important;
-  height: 36px !important;
-  line-height: 36px !important;
-  font-size: 18px !important;
+  width: 44px !important;
+  height: 44px !important;
+  line-height: 44px !important;
+  font-size: 20px !important;
   font-weight: 300 !important;
   background: var(--panel-bg) !important;
   color: var(--foreground) !important;
@@ -329,47 +425,348 @@ body {
 }
 
 .leaflet-control-zoom-in {
-  border-radius: 10px 10px 0 0 !important;
+  border-radius: 12px 12px 0 0 !important;
   border-bottom: 1px solid var(--glass-border) !important;
 }
 
 .leaflet-control-zoom-out {
-  border-radius: 0 0 10px 10px !important;
+  border-radius: 0 0 12px 12px !important;
 }
 
 .leaflet-control-attribution {
   background: var(--glass-bg) !important;
   backdrop-filter: blur(10px);
   color: rgba(255, 255, 255, 0.4) !important;
-  font-size: 9px !important;
-  padding: 4px 8px !important;
-  border-radius: 6px 0 0 0;
+  font-size: 10px !important;
+  padding: 6px 10px !important;
+  border-radius: 8px 0 0 0;
 }
 
 .leaflet-control-attribution a {
   color: var(--accent) !important;
 }
 
-/* 반응형 - 모바일 */
-@media (max-width: 480px) {
+/* ==================== 반응형 디자인 ==================== */
+
+/* 태블릿 */
+@media (max-width: 1024px) {
   .map-panel {
-    right: 16px;
+    width: 440px;
+  }
+}
+
+/* 작은 태블릿 / 큰 모바일 */
+@media (max-width: 768px) {
+  .logo {
+    top: 16px;
     left: 16px;
+    padding: 12px 16px;
+  }
+
+  .logo svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .logo span {
+    font-size: 14px;
+  }
+
+  .control-buttons {
+    bottom: 20px;
+    right: 20px;
+    gap: 10px;
+  }
+
+  .control-btn {
+    width: 48px;
+    height: 48px;
+  }
+
+  .control-btn svg {
+    width: 22px;
+    height: 22px;
+  }
+
+  .map-panel {
+    left: 20px;
+    right: 20px;
+    bottom: 90px;
     width: auto;
-    bottom: 76px;
+    max-width: none;
+  }
+
+  .map-list {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    padding: 12px;
+    max-height: 300px;
+  }
+
+  .map-item {
+    padding: 12px 6px;
+  }
+
+  .map-icon {
+    width: 36px;
+    height: 36px;
+  }
+
+  .map-icon svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .map-info h3 {
+    font-size: 10px;
+  }
+
+  .leaflet-control-zoom {
+    margin: 16px !important;
+  }
+
+  .leaflet-control-zoom a {
+    width: 40px !important;
+    height: 40px !important;
+    line-height: 40px !important;
+    font-size: 18px !important;
+  }
+}
+
+/* 모바일 */
+@media (max-width: 480px) {
+  .logo {
+    top: 12px;
+    left: 12px;
+    padding: 10px 14px;
+    border-radius: 12px;
+  }
+
+  .logo svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .logo span {
+    font-size: 13px;
+  }
+
+  .control-buttons {
+    bottom: 16px;
+    right: 16px;
+    gap: 8px;
+  }
+
+  .control-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+  }
+
+  .control-btn svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .map-panel {
+    left: 12px;
+    right: 12px;
+    bottom: 80px;
+    border-radius: 16px;
+  }
+
+  .panel-header {
+    padding: 14px 16px;
+  }
+
+  .panel-header h2 {
+    font-size: 14px;
+    gap: 8px;
+  }
+
+  .panel-header h2 svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .overlay-badge {
+    font-size: 10px;
+    padding: 3px 8px;
+  }
+
+  .close-btn {
+    width: 32px;
+    height: 32px;
+  }
+
+  .close-btn svg {
+    width: 14px;
+    height: 14px;
   }
 
   .map-list {
     grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+    padding: 10px;
+    max-height: 260px;
   }
 
-  .map-toggle-btn {
+  .map-item {
+    padding: 10px 4px;
+    gap: 6px;
+    border-radius: 10px;
+  }
+
+  .map-item.active::after {
+    width: 6px;
+    height: 6px;
+    top: 6px;
+    right: 6px;
+  }
+
+  .map-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+  }
+
+  .map-icon svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .map-info h3 {
+    font-size: 9px;
+  }
+
+  .info-btn {
+    width: 14px;
+    height: 14px;
+  }
+
+  .info-btn svg {
+    width: 10px;
+    height: 10px;
+  }
+
+  .tooltip {
+    min-width: 140px;
+    padding: 8px 10px;
+  }
+
+  .tooltip-desc {
+    font-size: 10px;
+  }
+
+  .tooltip-license {
+    font-size: 9px;
+  }
+
+  .leaflet-control-zoom {
+    margin: 12px !important;
+    border-radius: 10px !important;
+  }
+
+  .leaflet-control-zoom a {
+    width: 36px !important;
+    height: 36px !important;
+    line-height: 36px !important;
+    font-size: 16px !important;
+  }
+
+  .leaflet-control-zoom-in {
+    border-radius: 10px 10px 0 0 !important;
+  }
+
+  .leaflet-control-zoom-out {
+    border-radius: 0 0 10px 10px !important;
+  }
+
+  .leaflet-control-attribution {
+    font-size: 9px !important;
+    padding: 4px 8px !important;
+  }
+}
+
+/* 아주 작은 모바일 */
+@media (max-width: 360px) {
+  .map-list {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4px;
+    padding: 8px;
+  }
+
+  .map-item {
+    padding: 8px 2px;
+  }
+
+  .map-icon {
+    width: 28px;
+    height: 28px;
+  }
+
+  .map-icon svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .map-info h3 {
+    font-size: 8px;
+  }
+}
+
+/* 가로 모드 (Landscape) */
+@media (max-height: 500px) and (orientation: landscape) {
+  .logo {
+    top: 10px;
+    left: 10px;
+    padding: 8px 12px;
+  }
+
+  .logo svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .logo span {
+    font-size: 12px;
+  }
+
+  .control-buttons {
+    bottom: 10px;
+    right: 10px;
+    flex-direction: row;
+  }
+
+  .control-btn {
     width: 40px;
     height: 40px;
   }
 
-  .map-toggle-btn svg {
-    width: 18px;
-    height: 18px;
+  .map-panel {
+    left: 10px;
+    right: auto;
+    bottom: 10px;
+    top: 50px;
+    width: 340px;
+    max-height: calc(100vh - 60px);
+  }
+
+  .map-list {
+    grid-template-columns: repeat(3, 1fr);
+    max-height: none;
+    flex: 1;
+    overflow-y: auto;
+  }
+
+  .leaflet-control-zoom {
+    margin: 10px !important;
+  }
+
+  .leaflet-control-zoom a {
+    width: 32px !important;
+    height: 32px !important;
+    line-height: 32px !important;
+    font-size: 14px !important;
   }
 }

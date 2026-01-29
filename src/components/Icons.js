@@ -118,3 +118,20 @@ export const LogoIcon = () => (
         <polygon points="12 6 14 10 18 10 15 13 16 17 12 15 8 17 9 13 6 10 10 10 12 6" fill="currentColor" />
     </svg>
 );
+
+// Overlay Icon
+export const OverlayIcon = () => (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <rect x="3" y="3" width="12" height="12" rx="2" />
+        <rect x="9" y="9" width="12" height="12" rx="2" />
+    </svg>
+);
+
+// Info Icon (새로 추가)
+export const InfoIcon = () => (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="12" cy="12" r="10" />
+        <line x1="12" y1="16" x2="12" y2="12" />
+        <line x1="12" y1="8" x2="12.01" y2="8" />
+    </svg>
+);

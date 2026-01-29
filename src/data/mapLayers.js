@@ -8,6 +8,8 @@ export const mapLayers = [
         maxZoom: 19,
         icon: "globe",
         color: "#22c55e",
+        desc: "가장 많이 사용되는 오픈소스 지도",
+        license: "오픈소스 (ODbL)",
     },
     {
         id: "osm-hot",
@@ -17,6 +19,8 @@ export const mapLayers = [
         maxZoom: 19,
         icon: "hot",
         color: "#ef4444",
+        desc: "인도주의적 지원용 스타일",
+        license: "오픈소스 (ODbL)",
     },
     {
         id: "osm-de",
@@ -26,6 +30,8 @@ export const mapLayers = [
         maxZoom: 19,
         icon: "globe",
         color: "#fbbf24",
+        desc: "독일 스타일 OSM",
+        license: "오픈소스 (ODbL)",
     },
     {
         id: "osm-fr",
@@ -35,6 +41,8 @@ export const mapLayers = [
         maxZoom: 20,
         icon: "globe",
         color: "#3b82f6",
+        desc: "프랑스 스타일 OSM",
+        license: "오픈소스 (ODbL)",
     },
 
     // === CARTO 계열 ===
@@ -47,6 +55,8 @@ export const mapLayers = [
         subdomains: "abcd",
         icon: "dark",
         color: "#6366f1",
+        desc: "어두운 테마의 모던 지도",
+        license: "무료 (CC BY 3.0)",
     },
     {
         id: "carto-light",
@@ -57,6 +67,8 @@ export const mapLayers = [
         subdomains: "abcd",
         icon: "street",
         color: "#f8fafc",
+        desc: "밝은 테마의 깔끔한 지도",
+        license: "무료 (CC BY 3.0)",
     },
     {
         id: "carto-voyager",
@@ -67,6 +79,8 @@ export const mapLayers = [
         subdomains: "abcd",
         icon: "globe",
         color: "#f97316",
+        desc: "컬러풀한 현대적 지도",
+        license: "무료 (CC BY 3.0)",
     },
     {
         id: "carto-positron",
@@ -77,6 +91,8 @@ export const mapLayers = [
         subdomains: "abcd",
         icon: "street",
         color: "#d1d5db",
+        desc: "라벨 없는 미니멀 지도",
+        license: "무료 (CC BY 3.0)",
     },
 
     // === ESRI 계열 ===
@@ -88,6 +104,8 @@ export const mapLayers = [
         maxZoom: 19,
         icon: "satellite",
         color: "#0ea5e9",
+        desc: "고해상도 위성 이미지",
+        license: "무료 (비상업적)",
     },
     {
         id: "esri-topo",
@@ -97,6 +115,8 @@ export const mapLayers = [
         maxZoom: 19,
         icon: "terrain",
         color: "#84cc16",
+        desc: "등고선이 포함된 지형 지도",
+        license: "무료 (비상업적)",
     },
     {
         id: "esri-street",
@@ -106,6 +126,8 @@ export const mapLayers = [
         maxZoom: 19,
         icon: "street",
         color: "#f59e0b",
+        desc: "상세 도로 지도",
+        license: "무료 (비상업적)",
     },
     {
         id: "esri-natgeo",
@@ -115,6 +137,8 @@ export const mapLayers = [
         maxZoom: 16,
         icon: "globe",
         color: "#eab308",
+        desc: "내셔널 지오그래픽 스타일",
+        license: "무료 (비상업적)",
     },
     {
         id: "esri-ocean",
@@ -124,6 +148,8 @@ export const mapLayers = [
         maxZoom: 13,
         icon: "satellite",
         color: "#06b6d4",
+        desc: "해양 및 수중 지형 지도",
+        license: "무료 (비상업적)",
     },
     {
         id: "esri-gray",
@@ -133,6 +159,8 @@ export const mapLayers = [
         maxZoom: 16,
         icon: "street",
         color: "#9ca3af",
+        desc: "밝은 회색 미니멀 지도",
+        license: "무료 (비상업적)",
     },
     {
         id: "esri-dark-gray",
@@ -142,6 +170,8 @@ export const mapLayers = [
         maxZoom: 16,
         icon: "dark",
         color: "#4b5563",
+        desc: "어두운 회색 미니멀 지도",
+        license: "무료 (비상업적)",
     },
     {
         id: "esri-terrain",
@@ -151,6 +181,30 @@ export const mapLayers = [
         maxZoom: 13,
         icon: "terrain",
         color: "#a3e635",
+        desc: "기본 지형 배경 지도",
+        license: "무료 (비상업적)",
+    },
+    {
+        id: "esri-shaded",
+        name: "Shaded",
+        url: "https://server.arcgisonline.com/ArcGIS/rest/services/World_Shaded_Relief/MapServer/tile/{z}/{y}/{x}",
+        attribution: '&copy; Esri',
+        maxZoom: 13,
+        icon: "terrain",
+        color: "#78716c",
+        desc: "음영 기복 지도",
+        license: "무료 (비상업적)",
+    },
+    {
+        id: "esri-physical",
+        name: "Physical",
+        url: "https://server.arcgisonline.com/ArcGIS/rest/services/World_Physical_Map/MapServer/tile/{z}/{y}/{x}",
+        attribution: '&copy; Esri',
+        maxZoom: 8,
+        icon: "globe",
+        color: "#22d3ee",
+        desc: "물리적 지형 지도",
+        license: "무료 (비상업적)",
     },
 
     // === Stadia Maps 계열 ===
@@ -162,6 +216,8 @@ export const mapLayers = [
         maxZoom: 20,
         icon: "terrain",
         color: "#10b981",
+        desc: "야외 활동에 최적화된 지도",
+        license: "무료 (비상업적)",
     },
     {
         id: "stadia-smooth",
@@ -171,6 +227,8 @@ export const mapLayers = [
         maxZoom: 20,
         icon: "street",
         color: "#e2e8f0",
+        desc: "부드러운 밝은 테마",
+        license: "무료 (비상업적)",
     },
     {
         id: "stadia-dark",
@@ -180,6 +238,8 @@ export const mapLayers = [
         maxZoom: 20,
         icon: "dark",
         color: "#475569",
+        desc: "부드러운 다크 테마",
+        license: "무료 (비상업적)",
     },
     {
         id: "stadia-osm-bright",
@@ -189,6 +249,19 @@ export const mapLayers = [
         maxZoom: 20,
         icon: "globe",
         color: "#fcd34d",
+        desc: "밝고 선명한 OSM 스타일",
+        license: "무료 (비상업적)",
+    },
+    {
+        id: "stadia-satellite",
+        name: "Alidade Sat",
+        url: "https://tiles.stadiamaps.com/tiles/alidade_satellite/{z}/{x}/{y}{r}.jpg",
+        attribution: '&copy; Stadia, CNES',
+        maxZoom: 20,
+        icon: "satellite",
+        color: "#1e40af",
+        desc: "고품질 위성 이미지",
+        license: "무료 (비상업적)",
     },
 
     // === OpenTopoMap ===
@@ -200,9 +273,11 @@ export const mapLayers = [
         maxZoom: 17,
         icon: "topo",
         color: "#65a30d",
+        desc: "상세 등고선 지형도",
+        license: "오픈소스 (CC BY-SA)",
     },
 
-    // === Thunderforest (일부 무료) ===
+    // === Thunderforest ===
     {
         id: "cycle",
         name: "자전거",
@@ -211,6 +286,8 @@ export const mapLayers = [
         maxZoom: 22,
         icon: "transport",
         color: "#22d3ee",
+        desc: "자전거 도로가 강조된 지도",
+        license: "무료 (제한적)",
     },
     {
         id: "transport",
@@ -220,6 +297,8 @@ export const mapLayers = [
         maxZoom: 22,
         icon: "transport",
         color: "#f472b6",
+        desc: "대중교통 노선이 표시된 지도",
+        license: "무료 (제한적)",
     },
     {
         id: "landscape",
@@ -229,6 +308,30 @@ export const mapLayers = [
         maxZoom: 22,
         icon: "terrain",
         color: "#34d399",
+        desc: "자연 경관 강조 지도",
+        license: "무료 (제한적)",
+    },
+    {
+        id: "outdoors-tf",
+        name: "TF Outdoors",
+        url: "https://{s}.tile.thunderforest.com/outdoors/{z}/{x}/{y}.png",
+        attribution: '&copy; Thunderforest',
+        maxZoom: 22,
+        icon: "terrain",
+        color: "#4ade80",
+        desc: "하이킹/등산용 지도",
+        license: "무료 (제한적)",
+    },
+    {
+        id: "atlas",
+        name: "Atlas",
+        url: "https://{s}.tile.thunderforest.com/atlas/{z}/{x}/{y}.png",
+        attribution: '&copy; Thunderforest',
+        maxZoom: 22,
+        icon: "globe",
+        color: "#fb7185",
+        desc: "아틀라스 스타일 지도",
+        license: "무료 (제한적)",
     },
 
     // === 기타 ===
@@ -240,6 +343,8 @@ export const mapLayers = [
         maxZoom: 19,
         icon: "globe",
         color: "#a78bfa",
+        desc: "위키미디어 재단 제공",
+        license: "오픈소스 (CC BY-SA)",
     },
     {
         id: "mtb",
@@ -249,6 +354,8 @@ export const mapLayers = [
         maxZoom: 18,
         icon: "terrain",
         color: "#fb923c",
+        desc: "산악자전거 전용 지도",
+        license: "오픈소스",
     },
     {
         id: "opnv",
@@ -258,6 +365,8 @@ export const mapLayers = [
         maxZoom: 18,
         icon: "transport",
         color: "#c084fc",
+        desc: "독일 대중교통 지도",
+        license: "오픈소스",
     },
     {
         id: "watercolor",
@@ -267,6 +376,8 @@ export const mapLayers = [
         maxZoom: 16,
         icon: "watercolor",
         color: "#fda4af",
+        desc: "예술적 수채화 스타일",
+        license: "무료 (CC BY 3.0)",
     },
     {
         id: "toner",
@@ -276,6 +387,8 @@ export const mapLayers = [
         maxZoom: 20,
         icon: "dark",
         color: "#1f2937",
+        desc: "고대비 흑백 지도",
+        license: "무료 (CC BY 3.0)",
     },
     {
         id: "toner-lite",
@@ -285,6 +398,66 @@ export const mapLayers = [
         maxZoom: 20,
         icon: "street",
         color: "#6b7280",
+        desc: "연한 흑백 지도",
+        license: "무료 (CC BY 3.0)",
+    },
+    {
+        id: "terrain-stamen",
+        name: "Terrain",
+        url: "https://tiles.stadiamaps.com/tiles/stamen_terrain/{z}/{x}/{y}{r}.png",
+        attribution: '&copy; Stamen, Stadia',
+        maxZoom: 18,
+        icon: "terrain",
+        color: "#a8a29e",
+        desc: "지형이 강조된 자연 지도",
+        license: "무료 (CC BY 3.0)",
+    },
+
+    // === 추가 지도들 ===
+    {
+        id: "cartodb-dark-nolabels",
+        name: "Dark NoLabel",
+        url: "https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png",
+        attribution: '&copy; CARTO',
+        maxZoom: 20,
+        subdomains: "abcd",
+        icon: "dark",
+        color: "#27272a",
+        desc: "라벨 없는 다크 지도",
+        license: "무료 (CC BY 3.0)",
+    },
+    {
+        id: "jawg-streets",
+        name: "Jawg Streets",
+        url: "https://tile.jawg.io/jawg-streets/{z}/{x}/{y}.png?access-token=community",
+        attribution: '&copy; Jawg',
+        maxZoom: 22,
+        icon: "street",
+        color: "#60a5fa",
+        desc: "깔끔한 도로 지도",
+        license: "무료 (제한적)",
+    },
+    {
+        id: "jawg-dark",
+        name: "Jawg Dark",
+        url: "https://tile.jawg.io/jawg-dark/{z}/{x}/{y}.png?access-token=community",
+        attribution: '&copy; Jawg',
+        maxZoom: 22,
+        icon: "dark",
+        color: "#3f3f46",
+        desc: "모던 다크 테마",
+        license: "무료 (제한적)",
+    },
+    {
+        id: "jawg-terrain",
+        name: "Jawg Terrain",
+        url: "https://tile.jawg.io/jawg-terrain/{z}/{x}/{y}.png?access-token=community",
+        attribution: '&copy; Jawg',
+        maxZoom: 22,
+        icon: "terrain",
+        color: "#86efac",
+        desc: "지형 강조 지도",
+        license: "무료 (제한적)",
     },
 ];
 
